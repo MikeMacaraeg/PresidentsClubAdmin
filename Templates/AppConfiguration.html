@@ -1,0 +1,113 @@
+﻿<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10" style="height:25px;margin-bottom:7px;">
+        <h2 style="font-family:'Open Sans';font-weight:100;margin-top:0;padding-top:10px;padding-bottom:10px">
+            Configuration
+        </h2>        
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<div class="page-content">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th>Datasets</th>
+                <th>Active Dataset</th>
+                <th>Available Datasets</th>
+                <th>Activate Dataset</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td class="config-columns">General Managers</td>
+                <td class="config-columns" ng-repeat="(key,value) in gmCurrentDataset">{{value}}</td>
+                <td class="config-columns">
+                    <select ng-model="gmItemSelected" ng-options="key as key for (key,value) in gmDatasets">
+                        <option value="">None Selected</option>                        
+                    </select>
+                </td>
+                <td class="config-columns">
+                    <button type="button" class="btn btn-info dim" ng-really-message="Activate the General Managers <b>{{gmItemSelected}}</b> dataset?" ng-really-click="activateGMDataset(gmItemSelected)">Activate</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="config-columns">Sales Managers</td>
+                <td class="config-columns" ng-repeat="(key,value) in smCurrentDataset">{{value}}</td>
+                <td class="config-columns">
+                    <select ng-model="smItemSelected" ng-options="key as key for (key,value) in smDatasets">
+                        <option value="">None Selected</option>                        
+                    </select>
+                </td>
+                <td class="config-columns"><button type="button" class="btn btn-info dim" ng-really-message="Activate the Sales Managers  <b>{{smItemSelected}}</b> dataset?" ng-really-click="activateSMDataset(smItemSelected)">Activate</button></td>
+            </tr>
+            <tr>
+                <td class="config-columns">Inside Sales Executives</td>
+                <td class="config-columns" ng-repeat="(key,value) in iseCurrentDataset">{{value}}</td>
+                <td class="config-columns">
+                    <select ng-model="iseItemSelected" ng-options="key as key for (key,value) in iseDatasets">
+                        <option value="">None Selected</option>
+                    </select>
+                </td>
+                <td class="config-columns"><button type="button" class="btn btn-info dim" ng-really-message="Active the Inside Sales Executives <b>{{iseItemSelected}}</b> dataset?" ng-really-click="activateISEDataset(iseItemSelected)">Activate</button></td>
+            </tr>
+            <tr>
+                <td class="config-columns">Sales Executives</td>
+                <td class="config-columns" ng-repeat="(key,value) in seCurrentDataset">{{value}}</td>
+                <td class="config-columns">
+                    <select ng-model="seItemSelected" ng-options="key as key for (key,value) in seDatasets">
+                        <option value="">None Selected</option>                        
+                    </select>
+                </td>
+                <td class="config-columns"><button type="button" class="btn btn-info dim" ng-really-message="Activate the Sales Executives <b>{{seItemSelected}}</b> dataset?" ng-really-click="activateSEDataset(seItemSelected)">Activate</button></td>
+            </tr>
+            <tr>
+                <td class="config-columns">Senior Sales Directors</td>
+                <td class="config-columns" ng-repeat="(key,value) in ssdCurrentDataset">{{value}}</td>
+                <td class="config-columns">
+                    <select ng-model="ssdItemSelected" ng-options="key as key for (key,value) in ssdDatasets">
+                        <option value="">None Selected</option>
+                    </select>
+                </td>
+                <td class="config-columns"><button type="button" class="btn btn-info dim" ng-really-message="Activate the Senior Sales Directors <b>{{ssdItemSelected}}</b> dataset?" ng-really-click="activateSSDDataset(ssdItemSelected)">Activate</button></td>
+            </tr>
+            <tr>
+                <td class="config-columns">Regional Vice Presidents</td>
+                <td class="config-columns" ng-repeat="(key,value) in rvpCurrentDataset">{{value}}</td>
+                <td class="config-columns">
+                    <select ng-model="rvpItemSelected" ng-options="key as key for (key,value) in rvpDatasets">
+                        <option value="">None Selected</option>
+                    </select>
+                </td>
+                <td class="config-columns">
+                    <button type="button" class="btn btn-info dim" ng-really-message="Activate the Regional Vice Presidents <b>{{rvpItemSelected}}</b> dataset?" ng-really-click="activateRVPDataset(rvpItemSelected)">Activate</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="config-columns">Account Managers</td>
+                <td class="config-columns" ng-repeat="(key,value) in amCurrentDataset">{{value}}</td>
+                <td class="config-columns">
+                    <select ng-model="amItemSelected" ng-options="key as key for (key,value) in amDatasets">
+                        <option value="">None Selected</option>
+                    </select>
+                </td>
+                <td class="config-columns">
+                    <button type="button" class="btn btn-info dim" ng-really-message="Activate the Account Managers <b>{{amItemSelected}}</b> dataset?" ng-really-click="activateAMDataset(amItemSelected)">Activate</button>
+                </td>
+            </tr>
+            <tr>
+                <td class="config-columns">Monthly Summary</td>
+                <td class="config-columns" ng-repeat="(key,value) in msCurrentDataset">{{value}}</td>
+                <td class="config-columns">
+                    <select ng-model="msItemSelected" ng-options="key as key for (key,value) in msDatasets">
+                        <option value="">None Selected</option>
+                    </select>
+                </td>
+                <td class="config-columns"><button type="button" class="btn btn-info dim" ng-really-message="Activate the Monthly Summary <b>{{msItemSelected}}</b> dataset?" ng-really-click="activateMSDataset(msItemSelected)">Activate</button></td>
+            </tr>
+        </tbody>
+    </table>
+    <!--<a href="#" ng-click="sendMessage()">aaa</a>-->
+</div>
+

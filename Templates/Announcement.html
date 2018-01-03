@@ -1,0 +1,82 @@
+﻿<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10" style="height:25px;margin-bottom:7px;">
+        <h2 style="font-family:'Open Sans';font-weight:100;margin-top:0;padding-top:10px;padding-bottom:10px">
+            Announcements 
+        </h2>        
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+
+<div class="page-content" ng-init="tab = 1">
+
+    <div class="panel-heading">
+        <div class="panel-title m-b-md">
+
+        </div>
+        <div class="panel-options">
+            <ul class="nav nav-tabs">
+                <li class="tab1 active">
+                    <a onclick="$('.divUpload').removeClass('ng-hide');" class="tabUpload" data-toggle="tab" ng-click="tab = 1">Create Announcement</a>
+                </li>
+                <li class="tab2">
+                    <a class="tabEdit" data-toggle="tab" ng-click="tab = 2">View Announcements</a>
+                </li>                
+            </ul>
+        </div>
+    </div>
+
+    <div class="divUpload" ng-show="tab == 1">   
+        <div style="margin-right:20px">
+            <div text-angular="text-angular" name="htmlcontent" ng-model="announcement" ta-disabled='disabled' class="ta-editor">
+
+            </div>
+        </div>
+
+        <div>
+            <h5>Created By:</h5>
+        </div>
+
+        <div>
+            <input type="text" ng-model="createdBy" />            
+        </div>
+
+        <div style="margin-top:30px">
+            <button class="btn btn-info dim" ng-really-message="Are you sure you would like to add this accouncement?" ng-really-click="sendMessage(announcement, createdBy)">Add Announcement</button>
+        </div>
+
+        <hr />
+        <br />
+    </div>
+
+    <div ng-show="tab == 2">
+        <h4>Current Announcements</h4>
+        <input class="table-searchbox" type="search" ng-model="search" placeholder="Search" />
+        <table class="table table-bordered table-striped table-hover">
+            <thead>
+                <tr>
+                    <th style="width:40%">Message</th>
+                    <th style="width:20%">Created By</th>
+                    <th style="width:20%">Created Date</th>
+                    <th style="width:10%">Show</th>
+                    <th style="width:10%">Toggle Show</th>
+                </tr>
+            </thead>
+            <tbody>  <!--//TSF 04/30/15 add filter-->
+                <tr ng-repeat="(key,value) in Announcements | filter:search as result">
+                    <td>
+                        <span ng-bind-html="value.message"></span>
+                    </td>
+                    <td>{{value.createdBy}}</td>
+                    <td>{{value.createdDate | date:"MM/dd/yyyy hh:mm a"}}</td>
+                    <td>{{formatShow(value.show)}}</td>
+                    <td>
+                        <button type="button" style="width:80px" ng-click="toggleShow(key,value)">{{buttonText(value.show)}}</button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>

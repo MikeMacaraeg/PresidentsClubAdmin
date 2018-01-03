@@ -1,0 +1,65 @@
+﻿<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10" style="height:25px;margin-bottom:7px;">
+        <h2 style="font-family:'Open Sans';font-weight:100;margin-top:0;padding-top:10px;padding-bottom:10px">
+            Photo Management
+        </h2>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<div class="page-content">
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="table-align3">Image</th>
+                <th class="table-align3">Caption</th>
+                <th class="table-align3">Show/Unshow</th>
+            </tr>
+        </thead>
+        <tr ng-repeat="(key,value) in photos">
+            <td class="table-align3" style="max-width:600px">                
+                <img src="{{value.Name}}" style="max-width:600px;max-height:600px" />                
+            </td>
+            <td class="table-align3" style="vertical-align:middle">
+                <form ng-submit="saveCaption()">
+                    <input type="text" value="{{value.Caption}}" />
+                    <button type="button" class="btn btn-info fa fa-pencil" data-toggle="modal" data-target="#myModal" ng-click="getPhotoDataForEdit(value.$id)"></button>
+                </form>
+            </td>
+            <td class="table-align3" style="vertical-align:middle">
+                <button type="button" style="width:80px" ng-click="toggleShow(key,value)">{{buttonText(value.Show)}}</button>
+            </td>
+        </tr>
+    </table>
+</div>
+
+<div class="modal inmodal in" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <form ng-submit="saveChanges()">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <i class="fa fa-pencil modal-icon"></i>
+                    <h4 class="modal-title">Edit Caption</h4>
+                    <small class="font-bold"></small>
+                </div>
+                <div class="modal-body" style="text-align:center">
+                    <div class="row">
+                        <div class="col-sm-3" style="text-align:right">
+                            Caption:
+                        </div>
+                        <div class="col-sm-9" style="text-align:left">
+                            <input type="text" style="width:400px" ng-model="photoData.Caption" />
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="useOldPhotoData()">Close</button>
+                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

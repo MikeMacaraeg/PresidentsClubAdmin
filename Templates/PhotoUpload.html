@@ -1,0 +1,60 @@
+﻿<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10" style="height:25px;margin-bottom:7px;">
+        <h2 style="font-family:'Open Sans';font-weight:100;margin-top:0;padding-top:10px;padding-bottom:10px">
+            Upload Photos
+        </h2>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<div class="page-content">
+    <!--<div class="row">
+        <label for="fileToUpload">Select a File to Upload</label><br />
+        <input type="file" ng-model-instant id="fileToUpload" multiple onchange="angular.element(this).scope().setFiles(this)" />
+    </div>
+    <input type="button" ng-click="uploadFile()" value="Upload" />
+    <div ng-show="progressVisible">
+        <div class="percent">{{progress}}%</div>
+        <div class="progress-bar2">
+            <div class="uploaded" ng-style="{'width': progress+'%'}"></div>
+        </div>
+    </div>-->
+
+    <div class="row-fluid">
+        <div class="span12">
+            <h6>Choose file to upload:</h6>
+            <input type="file" class="btn" ng-model="$files" />
+            <button type="button" class="btn btn-info dim" ng-click="onFileSelect($files)">Upload</button>
+        </div>
+    </div>
+
+    <div class="row-fluid spacer">
+        <div class="span12">
+            Test
+            <div class="drop-box"
+                 data-ng-file-drop="onFileSelect($files);"
+                 data-ng-file-drop-available="dropSupported=true">
+                or drop file here
+            </div>
+        </div>
+    </div>
+
+    <div class="row-fluid">
+        test
+        <div ang-round-progress data-round-progress-model="model.roundProgressData"
+             data-round-progress-width="250"
+             data-round-progress-height="250"
+             data-round-progress-outer-circle-width="20"
+             data-round-progress-inner-circle-width="5"
+             data-round-progress-outer-circle-radius="100"
+             data-round-progress-inner-circle-radius="70"
+             data-round-progress-label-font="35pt Arial"
+             data-round-progress-outer-circle-background-color="#C8C8C8"
+             data-round-progress-outer-circle-foreground-color="#62C462"
+             data-round-progress-inner-circle-color="#62C462"
+             data-round-progress-label-color="#9DA0A4">
+        </div>
+    </div>
+</div>

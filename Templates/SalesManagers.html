@@ -1,0 +1,197 @@
+﻿<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10" style="height:25px;margin-bottom:7px;">
+        <h2 style="font-family:'Open Sans';font-weight:100;margin-top:0;padding-top:10px;padding-bottom:10px">
+            Sales Managers
+
+        </h2>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<div class="page-content" ng-init="tab = 1">
+
+    <div class="panel-heading">
+        <div class="panel-title m-b-md">
+
+        </div>
+        <div class="panel-options">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a onclick="$('.divUpload').removeClass('ng-hide'); $('.divEdit').addClass('ng-hide');" class="tabUpload" data-toggle="tab" ng-click="tab = 1">Upload</a>
+                </li>
+                <li>
+                    <a class="tabEdit" data-toggle="tab" ng-click="tab = 2">Edit</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="divUpload" ng-show="tab == 1">
+        <div style="float:right;padding-right:10px">
+            <a href="{{filename}}" target="_self" download="{{filename}}" class="btn btn-primary">Download Template</a>
+        </div>
+
+        <div class="block center">
+            <ng-csv-import class="import"
+                           content="csv.content"
+                           header="csv.header"
+                           separator="csv.separator"
+                           result="csv.result"></ng-csv-import>
+        </div>
+
+        <button type="button" class="btn btn-info dim" ng-click="sendMessage(parseJson(csv.result))"> Submit</button>
+
+        <div class="block right" ng-if="csv.result && tab == 1">
+            <div>
+                <input class="table-searchbox" type="search" ng-model="searchUpload" placeholder="Search" />
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>DSM</th>
+                            <th>Email</th>
+                            <th class="table-align2">Total Revenue % to Budget</th>                            
+                            <th class="table-align2">Total New Business % to Budget</th>                            
+                            <th class="table-align3">Meets Criteria</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="json in parseJson(csv.result) | filter:searchUpload as result">
+                        <td>{{json.Rank}}</td>
+                        <td>{{json.Name}}</td>
+                        <td>{{json.Email}}</td>
+                        <td class="table-align2">{{json.TotalRevenuePerToBudget}}</td>                        
+                        <td class="table-align2">{{json.TotalNewBusinessPerToBudget}}</td>                        
+                        <td class="table-align3"><i class="fa {{formatMC(json.MeetsCriteria)}}"></i></td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="divEdit" ng-show="tab == 2">
+        <div>
+            <div>
+                Data Sets (YYYYMMDDhhmmss):
+                <select ng-model="itemSelected" ng-options="key as key for (key,value) in SalesManagersDatasets" style="width:150px">
+                    <option value="">None Selected</option>
+                </select>
+                <br />
+                <br />
+                <button class="btn btn-info dim" ng-click="SalesManagers()">Submit</button>
+            </div>
+        </div>
+
+        <div class="block right" ng-if="tab2Result && tab == 2">
+            <div>
+                <input class="table-searchbox" type="search" ng-model="searchEdit" placeholder="Search" />
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Rank</th>
+                            <th>DSM</th>
+                            <th>Email</th>
+                            <th class="table-align2">Total Revenue % to Budget</th>                            
+                            <th class="table-align2">Total New Business % to Budget</th>                            
+                            <th class="table-align3">Meets Criteria</th>
+                            <th>Edit/Save</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="(key,value) in Dataset | orderBy:'Rank'  | filter:searchEdit as result">
+                        <td style="vertical-align:middle">{{value.Rank}}</td>
+                        <td style="vertical-align:middle">{{value.Name}}</td>
+                        <td style="vertical-align:middle">{{value.Email}}</td>
+                        <td class="table-align2" style="vertical-align:middle">{{value.TotalRevenuePerToBudget}}</td>
+                        <td class="table-align2" style="vertical-align:middle">{{value.TotalNewBusinessPerToBudget}}</td>
+                        <td class="table-align3" style="vertical-align:middle"><i class="fa {{formatMC(value.MeetsCriteria)}}"></i></td>
+                        <td class="table-align3">
+                            <button type="button" class="btn btn-info fa fa-pencil" data-toggle="modal" data-target="#myModal" ng-click="getRowDataForEdit(value.$id)"></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--****Edit Row Modal***-->
+<div class="modal inmodal in" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+    <div class="modal-dialog">
+        <div class="modal-content animated bounceInRight">
+            <form ng-submit="saveChanges()">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                    <i class="fa fa-pencil modal-icon"></i>
+                    <h4 class="modal-title">Edit Row</h4>
+                    <small class="font-bold"></small>
+                </div>
+                <div class="modal-body" style="text-align:center">
+                    <div class="row">
+                        <div class="col-sm-6" style="text-align:right">
+                            Rank:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left">
+                            <input type="text" ng-model="rowData.Rank" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6" style="text-align:right">
+                            Name:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left">
+                            <input type="text" ng-model="rowData.Name" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6" style="text-align:right">
+                            Email:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left">
+                            <input type="text" ng-model="rowData.Email" />
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-6" style="text-align:right">
+                            Total Revenue Per to Budget:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left">
+                            <input type="text" ng-model="rowData.TotalRevenuePerToBudget" />
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-sm-6" style="text-align:right">
+                            Total New Business Per to Budget:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left">
+                            <input type="text" ng-model="rowData.TotalNewBusinessPerToBudget" />
+                        </div>
+                    </div>                    
+                    <div class="row">
+                        <div class="col-sm-6" style="text-align:right">
+                            Meets Criteria:
+                        </div>
+                        <div class="col-sm-6" style="text-align:left">
+                            <div class="form-group">
+                                <label>
+                                    <input type="radio" name="meetsCriteria" value="true" ng-model="rowData.MeetsCriteria">
+                                    Yes
+                                </label>
+                                <label>
+                                    <input type="radio" name="meetsCriteria" value="false" ng-model="rowData.MeetsCriteria">
+                                    No
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="useOldRowData()">Close</button>
+                    <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Save changes</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,114 @@
+﻿<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10" style="height:25px;margin-bottom:7px;">
+        <h2 style="font-family:'Open Sans';font-weight:100;margin-top:0;padding-top:10px;padding-bottom:10px">
+            Login History
+        </h2>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+
+<!--<div class="page-content">
+    <div class="panel-body">
+        <div class="panel-group" id="accordion">
+            <div class="panel panel-default" ng-repeat="(key,value) in LoginHistory">
+                <div class="panel-heading">
+                    <h5 class="panel-title">
+                        <a data-toggle="collapse" data-parent="#accordion" href="#{{formatID(value.$id)}}" aria-expanded="true" class="collapsed">{{value.$id}}</a>
+                    </h5>
+                </div>
+                <div id="{{formatID(value.$id)}}" class="panel-collapse collapse" aria-expanded="false">
+                    <div class="panel-body">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="20%">
+                                        First Name
+                                    </th>
+                                    <th width="20%">
+                                        LastName
+                                    </th>
+                                    <th width="35%">
+                                        Email Address
+                                    </th>
+                                    <th width="25%">
+                                        Date/Time
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="obj in value">
+                                <tr>
+                                    <td>
+                                        {{obj.firstName}}
+                                    </td>
+                                    <td>
+                                        {{obj.lastName}}
+                                    </td>
+                                    <td>
+                                        {{obj.email}}
+                                    </td>
+                                    <td>
+                                        {{obj.logDateTime | date:"MM/dd/yyyy hh:mm a" }}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>-->
+
+<div class="page-content">
+    <div class="panel-body">
+        <div class="panel-group" id="accordion">
+            <accordion class="" ng-repeat="(key,value) in LoginHistory">
+                <accordion-group heading="{{value.$id}}" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled" href="#{{formatID(value.$id)}}" aria-expanded="true" class="">
+                    <!--<accordion-group id="{{formatID(value.$id)}}" class="panel-collapse" aria-expanded="false">-->
+                    <div class="panel-body">
+                        <table class="table table-bordered table-striped table-hover">
+                            <thead>
+                                <tr>
+                                    <th width="20%">
+                                        First Name
+                                    </th>
+                                    <th width="20%">
+                                        LastName
+                                    </th>
+                                    <th width="35%">
+                                        Email Address
+                                    </th>
+                                    <th width="25%">
+                                        Date/Time
+                                    </th>
+                                </tr>
+                            </thead>
+                            <tbody ng-repeat="obj in value">
+                                <tr>
+                                    <td>
+                                        {{obj.firstName}}
+                                    </td>
+                                    <td>
+                                        {{obj.lastName}}
+                                    </td>
+                                    <td>
+                                        {{obj.email}}
+                                    </td>
+                                    <td>
+                                        {{obj.date | date:"MM/dd/yyyy hh:mm a"}}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <!--</accordion-group>-->
+                </accordion-group>
+            </accordion>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,235 @@
+﻿<div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10" style="height:25px;margin-bottom:7px;">
+        <h2 style="font-family:'Open Sans';font-weight:100;margin-top:0;padding-top:10px;padding-bottom:10px">
+            Monthly Summary
+        </h2>
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>
+
+<div class="page-content" ng-init="tab = 1">
+
+    <div class="panel-heading">
+        <div class="panel-title m-b-md">
+
+        </div>
+        <div class="panel-options">
+            <ul class="nav nav-tabs">
+                <li class="active">
+                    <a onclick="$('.divUpload').removeClass('ng-hide'); $('.divEdit').addClass('ng-hide');" class="tabUpload" data-toggle="tab" ng-click="tab = 1">Upload</a>
+                </li>
+                <li>
+                    <a class="tabEdit" data-toggle="tab" ng-click="tab = 2">Edit</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+
+    <div class="divUpload" ng-show="tab == 1">
+        <div style="float:right;padding-right:10px">
+            <a href="{{filename}}" target="_self" download="{{filename}}" class="btn btn-primary">Download Template</a>
+        </div>
+
+        <div class="block center">
+            <ng-csv-import class="import"
+                           content="csv.content"
+                           header="csv.header"
+                           separator="csv.separator"
+                           result="csv.result"></ng-csv-import>
+        </div>
+
+        <button class="btn btn-info dim" type="button" ng-click="sendMessage(parseJson(csv.result))"> Submit</button>
+
+
+        <div class="block right" ng-if="csv.result && tab == 1">
+            <div>
+                <input class="table-searchbox" type="search" ng-model="searchUpload" placeholder="Search" />
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th class="table-align3">Proposed EMEA</th>
+                            <th class="table-align3">Proposed North America</th>
+                            <th class="table-align3">Proposed Total</th>
+                            <th class="table-align3">Actual EMEA</th>
+                            <th class="table-align3">Actual North America</th>
+                            <th class="table-align3">Actual Total</th>
+                            <th class="table-align3">% Qualified EMEA</th>
+                            <th class="table-align3">% Qualified North America</th>
+                            <th class="table-align3">% Qualified Total</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="json in parseJson(csv.result)  | filter:searchUpload as result">
+                        <td>{{json.Position}}</td>
+                        <td class="table-align3">{{json.ProposedEMEA}}</td>
+                        <td class="table-align3">{{json.ProposedNorthAmerica}}</td>
+                        <td class="table-align3">{{json.ProposedTotal}}</td>
+                        <td class="table-align3">{{json.ActualEMEA}}</td>
+                        <td class="table-align3">{{json.ActualNorthAmerica}}</td>
+                        <td class="table-align3">{{json.ActualTotal}}</td>
+                        <td class="table-align3">{{json.PerQualifiedEMEA}}</td>
+                        <td class="table-align3">{{json.PerQualifiedNorthAmerica}}</td>
+                        <td class="table-align3">{{json.PerQualifiedTotal}}</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <div class="divEdit" ng-show="tab == 2">
+        <div>
+            <div>
+                Data Sets (YYYYMMDDhhmmss):
+                <select ng-model="itemSelected" ng-options="key as key for (key,value) in MonthlySummaryDatasets" style="width:150px">
+                    <option value="">None Selected</option>
+                </select>
+                <br />
+                <br />
+                <button class="btn btn-info dim" ng-click="MonthlySummary()">Submit</button>
+            </div>
+        </div>
+
+        <div class="block right" ng-if="tab2Result && tab == 2">
+            <div>
+                <input class="table-searchbox" type="search" ng-model="searchEdit" placeholder="Search" />
+                <table class="table table-bordered table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>Position</th>
+                            <th class="table-align3">Proposed EMEA</th>
+                            <th class="table-align3">Proposed North America</th>
+                            <th class="table-align3">Proposed Total</th>
+                            <th class="table-align3">Actual EMEA</th>
+                            <th class="table-align3">Actual North America</th>
+                            <th class="table-align3">Actual Total</th>
+                            <th class="table-align3">% Qualified EMEA</th>
+                            <th class="table-align3">% Qualified North America</th>
+                            <th class="table-align3">% Qualified Total</th>
+                            <th class="table-align3">Edit</th>
+                        </tr>
+                    </thead>
+                    <tr ng-repeat="(key,value) in Dataset | filter:searchEdit as result">
+                        <td style="vertical-align:middle">{{value.Position}}</td>
+                        <td class="table-align3" style="vertical-align:middle">{{value.ProposedEMEA}}</td>
+                        <td class="table-align3" style="vertical-align:middle">{{value.ProposedNorthAmerica}}</td>
+                        <td class="table-align3" style="vertical-align:middle">{{value.ProposedTotal}}</td>
+                        <td class="table-align3" style="vertical-align:middle">{{value.ActualEMEA}}</td>
+                        <td class="table-align3" style="vertical-align:middle">{{value.ActualNorthAmerica}}</td>
+                        <td class="table-align3" style="vertical-align:middle">{{value.ActualTotal}}</td>
+                        <td class="table-align3" style="vertical-align:middle">{{value.PerQualifiedEMEA}}</td>
+                        <td class="table-align3" style="vertical-align:middle">{{value.PerQualifiedNorthAmerica}}</td>
+                        <td class="table-align3" style="vertical-align:middle">{{value.PerQualifiedTotal}}</td>
+                        <td class="table-align3">
+                            <button type="button" class="btn btn-info fa fa-pencil" data-toggle="modal" data-target="#myModal" ng-click="getRowDataForEdit(value.$id)"></button>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!--****Edit Row Modal***-->
+    <div class="modal inmodal in" id="myModal" tabindex="-1" role="dialog" aria-hidden="true" style="display: none;">
+        <div class="modal-dialog">
+            <div class="modal-content animated bounceInRight">
+                <form ng-submit="saveChanges()">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">×</span><span class="sr-only">Close</span></button>
+                        <i class="fa fa-pencil modal-icon"></i>
+                        <h4 class="modal-title">Edit Row</h4>
+                        <small class="font-bold"></small>
+                    </div>
+                    <div class="modal-body" style="text-align:center">
+                        <div class="row">
+                            <div class="col-sm-6" style="text-align:right">
+                                Position:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left">
+                                <input type="text" ng-model="rowData.Position" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" style="text-align:right">
+                                Proposed EMEA:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left">
+                                <input type="text" ng-model="rowData.ProposedEMEA" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" style="text-align:right">
+                                Proposed North America:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left">
+                                <input type="text" ng-model="rowData.ProposedNorthAmerica" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" style="text-align:right">
+                                Proposed Total:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left">
+                                <input type="text" ng-model="rowData.ProposedTotal" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" style="text-align:right">
+                                Actual EMEA:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left">
+                                <input type="text" ng-model="rowData.ActualEMEA" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" style="text-align:right">
+                                Actual North America:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left">
+                                <input type="text" ng-model="rowData.ActualNorthAmerica" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" style="text-align:right">
+                                Actual Total:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left">
+                                <input type="text" ng-model="rowData.ActualTotal" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" style="text-align:right">
+                                % Qualified EMEA:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left">
+                                <input type="text" ng-model="rowData.PerQualifiedEMEA" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" style="text-align:right">
+                                % Qualified North America:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left">
+                                <input type="text" ng-model="rowData.PerQualifiedNorthAmerica" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6" style="text-align:right">
+                                % Qualified Total:
+                            </div>
+                            <div class="col-sm-6" style="text-align:left">
+                                <input type="text" ng-model="rowData.PerQualifiedTotal" />
+                            </div>
+                        </div>                        
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-white" data-dismiss="modal" ng-click="useOldRowData()">Close</button>
+                        <button type="submit" class="btn btn-primary" data-toggle="modal" data-target="#myModal">Save changes</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>

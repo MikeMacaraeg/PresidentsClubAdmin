@@ -1,0 +1,64 @@
+﻿ <div class="row wrapper border-bottom white-bg page-heading">
+    <div class="col-lg-10" style="height:25px;margin-bottom:7px;">
+        <h2 style="font-family:'Open Sans';font-weight:100;margin-top:0;padding-top:10px;padding-bottom:10px">
+            Tweets
+        </h2>
+        <!--<ol class="breadcrumb">
+            <li>
+                <a href="/">Upload CSVs</a>
+            </li>
+            <li class="active">
+                <strong>Senior Sales Director</strong>
+            </li>
+        </ol>-->
+    </div>
+    <div class="col-lg-2">
+
+    </div>
+</div>    
+
+<div class="page-content">
+    <input class="table-searchbox" type="search" ng-model="tweet" placeholder="Search" />
+    <table class="table table-bordered table-striped table-hover">
+        <thead>
+            <tr>
+                <th class="table-align3">Name</th>
+                <th>
+                    Message
+                </th>
+                <th class="table-align3">
+                    Date
+                </th>
+                <th class="table-align3">
+                    Show
+                </th>
+                <th class="table-align3">
+                    Toggle Show
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr ng-repeat="(key,value) in tweets | filter:tweet as result">  <!--//TSF 04/30/15 add filter-->
+                <td style="max-width:200px" class="table-align3">
+                    {{value.fullName}}
+                </td>
+
+                <td style="max-width:500px">
+                    <div style="width:100%;overflow:hidden">{{value.message}}</div>
+                </td>
+                <td style="max-width:200px" class="table-align3">
+                    {{value.DateTime | date:"MM/dd/yyyy hh:mm a" }}
+                </td>
+                <td class="table-align3">
+                    {{formatShow(value.show)}}
+                </td>
+                <td class="table-align3">
+                    <button type="button" style="width:80px" ng-click="toggleShow(key,value)">{{buttonText(value.show)}}</button>
+                    <a href="{{filename}}" target="_self" download="{{filename}}">Download File</a>
+                </td>
+            </tr>
+        </tbody>
+    </table>
+
+   
+</div>
